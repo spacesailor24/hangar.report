@@ -19,7 +19,7 @@ export default function Navigation() {
           <div className="flex items-center space-x-8">
             <Link 
               href="/" 
-              className="text-xl font-bold tracking-wider hover:text-[var(--accent-cyber)] transition-colors"
+              className="text-xl font-bold tracking-wider hover:text-[var(--accent-nasa)] transition-colors"
             >
               HANGAR REPORT
             </Link>
@@ -30,8 +30,8 @@ export default function Navigation() {
                   href={item.href}
                   className={`px-3 py-2 text-sm tracking-wide transition-all ${
                     pathname === item.href
-                      ? 'text-[var(--accent-cyber)] border-b-2 border-[var(--accent-cyber)]'
-                      : 'text-[var(--foreground)] hover:text-[var(--accent-cyber)] hover:border-b-2 hover:border-[var(--accent-cyber)]'
+                      ? 'text-[var(--accent-nasa)] border-b-2 border-[var(--accent-nasa)]'
+                      : 'text-[var(--foreground)] hover:text-[var(--accent-nasa)] hover:border-b-2 hover:border-[var(--accent-nasa)]'
                   }`}
                 >
                   {item.label}

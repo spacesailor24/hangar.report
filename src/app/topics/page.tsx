@@ -18,7 +18,7 @@ export default function TopicsPage() {
             The Topics Database is currently being assembled. Soon you'll be able to browse 
             organized intelligence on ships, weapons, locations, and more.
           </p>
-          <div className="flex items-center justify-center gap-2 text-[var(--accent-cyber)] text-sm">
+          <div className="flex items-center justify-center gap-2 text-[var(--accent-nasa)] text-sm">
             <span className="animate-pulse">●</span>
             <span className="tracking-widest">ESTIMATED COMPLETION: SOON™</span>
             <span className="animate-pulse">●</span>

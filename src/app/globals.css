@@ -4,7 +4,6 @@
   --background: #000000;
   --foreground: #ededed;
   --accent-nasa: #FF5500;
-  --accent-cyber: #00FF88;
   --accent-warning: #FFD700;
   --transmission-bg: rgba(255, 255, 255, 0.02);
   --transmission-border: rgba(255, 255, 255, 0.1);
@@ -14,7 +13,6 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-nasa: var(--accent-nasa);
-  --color-cyber: var(--accent-cyber);
   --color-warning: var(--accent-warning);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -43,16 +41,12 @@ body {
 
 .transmission-box:hover {
   background: rgba(255, 255, 255, 0.05);
-  border-color: var(--accent-cyber);
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+  border-color: var(--accent-nasa);
+  box-shadow: 0 0 20px rgba(255, 85, 0, 0.2);
 }
 
 .nasa-accent {
   color: var(--accent-nasa);
-}
-
-.cyber-accent {
-  color: var(--accent-cyber);
 }
 
 .warning-accent {

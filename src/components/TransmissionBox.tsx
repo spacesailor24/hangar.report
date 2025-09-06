@@ -9,7 +9,7 @@ interface TransmissionBoxProps {
 }
 
 const typeColors = {
-  NEWS: 'text-[var(--accent-cyber)]',
+  NEWS: 'text-[var(--accent-nasa)]',
   LEAK: 'text-[var(--accent-warning)]',
   OFFICIAL: 'text-blue-400',
   RUMOR: 'text-purple-400',
@@ -53,7 +53,7 @@ export default function TransmissionBox({
         </span>
       </div>
       
-      <h3 className="text-lg font-bold mb-3 group-hover:text-[var(--accent-cyber)] transition-colors">
+      <h3 className="text-lg font-bold mb-3 group-hover:text-[var(--accent-nasa)] transition-colors">
         {title}
       </h3>
       
@@ -74,7 +74,7 @@ export default function TransmissionBox({
         ))}
       </div>
       
-      <div className="mt-4 flex items-center gap-2 text-[var(--accent-cyber)] opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="mt-4 flex items-center gap-2 text-[var(--accent-nasa)] opacity-0 group-hover:opacity-100 transition-opacity">
         <span className="text-xs">ACCESS TRANSMISSION</span>
         <span className="text-lg">→</span>
       </div>

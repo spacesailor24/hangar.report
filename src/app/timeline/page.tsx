@@ -104,12 +104,27 @@ export default function TimelinePage() {
     return groups
   }, {} as Record<number, typeof filteredTransmissions>)
 
+  const getTransmissionTypeColor = (type: TransmissionType) => {
+    switch (type) {
+      case TransmissionType.NEWS:
+        return 'bg-[var(--accent-nasa)]'
+      case TransmissionType.LEAK:
+        return 'bg-[var(--accent-warning)]'
+      case TransmissionType.OFFICIAL:
+        return 'bg-blue-400'
+      case TransmissionType.RUMOR:
+        return 'bg-purple-400'
+      default:
+        return 'bg-[var(--accent-nasa)]'
+    }
+  }
+
   return (
     <div className="min-h-screen">
       <div className="sticky top-0 z-10 bg-[rgba(0,0,0,0.9)] backdrop-blur-sm border-b border-[var(--transmission-border)]">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-between px-4 py-2 text-xs">
-            <span className="text-[var(--accent-cyber)]">YEAR: {selectedYear}</span>
+            <span className="text-[var(--accent-nasa)]">YEAR: {selectedYear}</span>
             <span className="text-[var(--accent-nasa)]">CHRONOLOGICAL FEED</span>
           </div>
           
@@ -124,8 +139,8 @@ export default function TimelinePage() {
                   }}
                   className={`px-4 py-3 text-xs tracking-wider whitespace-nowrap transition-all ${
                     selectedMonth === index
-                      ? 'text-[var(--accent-cyber)] border-b-2 border-[var(--accent-cyber)] bg-[rgba(0,255,136,0.1)]'
-                      : 'text-[var(--foreground)] hover:text-[var(--accent-cyber)] hover:bg-[rgba(255,255,255,0.05)]'
+                      ? 'text-[var(--accent-nasa)] border-b-2 border-[var(--accent-nasa)] bg-[rgba(255,85,0,0.1)]'
+                      : 'text-[var(--foreground)] hover:text-[var(--accent-nasa)] hover:bg-[rgba(255,255,255,0.05)]'
                   } ${index === currentMonth ? 'font-bold' : ''}`}
                 >
                   {month.toUpperCase()}
@@ -140,8 +155,8 @@ export default function TimelinePage() {
                 onClick={() => setSelectedDay(null)}
                 className={`px-4 py-2 text-xs tracking-wider transition-all ${
                   selectedDay === null
-                    ? 'text-[var(--accent-cyber)] bg-[rgba(0,255,136,0.1)]'
-                    : 'text-[var(--foreground)] hover:text-[var(--accent-cyber)] hover:bg-[rgba(255,255,255,0.05)]'
+                    ? 'text-[var(--accent-nasa)] bg-[rgba(255,85,0,0.1)]'
+                    : 'text-[var(--foreground)] hover:text-[var(--accent-nasa)] hover:bg-[rgba(255,255,255,0.05)]'
                 }`}
               >
                 ALL
@@ -152,8 +167,8 @@ export default function TimelinePage() {
                   onClick={() => setSelectedDay(day)}
                   className={`px-3 py-2 text-xs tracking-wider transition-all ${
                     selectedDay === day
-                      ? 'text-[var(--accent-cyber)] bg-[rgba(0,255,136,0.1)]'
-                      : 'text-[var(--foreground)] hover:text-[var(--accent-cyber)] hover:bg-[rgba(255,255,255,0.05)]'
+                      ? 'text-[var(--accent-nasa)] bg-[rgba(255,85,0,0.1)]'
+                      : 'text-[var(--foreground)] hover:text-[var(--accent-nasa)] hover:bg-[rgba(255,255,255,0.05)]'
                   }`}
                 >
                   {day}
@@ -182,7 +197,7 @@ export default function TimelinePage() {
               <div className="space-y-4 pl-12">
                 {transmissions.map(transmission => (
                   <div key={transmission.id} className="relative">
-                    <div className="absolute -left-12 top-6 w-4 h-4 rounded-full bg-[var(--accent-cyber)] animate-pulse"></div>
+                    <div className={`absolute -left-12 top-6 w-4 h-4 rounded-full ${getTransmissionTypeColor(transmission.type)} animate-pulse`}></div>
                     <div className="absolute -left-[42px] top-10 bottom-0 w-[1px] bg-[var(--transmission-border)]"></div>
                     <TransmissionBox
                       title={transmission.title}
