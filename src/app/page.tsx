@@ -76,14 +76,6 @@ export default function HighlightsPage() {
           />
         ))}
       </div>
-
-      <div className="mt-12 text-center">
-        <div className="inline-flex items-center gap-2 text-[var(--accent-nasa)] text-sm">
-          <span className="animate-pulse">●</span>
-          <span className="tracking-widest">LIVE FEED ACTIVE</span>
-          <span className="animate-pulse">●</span>
-        </div>
-      </div>
     </div>
   )
 }
