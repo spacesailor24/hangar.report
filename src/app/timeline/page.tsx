@@ -97,45 +97,74 @@ export default function TimelinePage() {
 
   // Handle scroll to detect current visible date
   const handleScroll = useCallback(() => {
-    console.log('handleScroll called')
-    
     // Use window scroll since the page itself is scrolling, not a container
     const scrollTop = window.pageYOffset || document.documentElement.scrollTop
     const windowHeight = window.innerHeight
-    const viewportCenter = scrollTop + windowHeight / 2
+    const stickyHeaderHeight = 200 // Account for sticky navigation
+    const viewportTop = scrollTop + stickyHeaderHeight
 
-    let closestDay = null
-    let closestDistance = Infinity
+    let targetDay = null
+    let closestToTop = null
+    let closestTopDistance = Infinity
 
-    // Check each day element relative to window scroll position
+    // First, find the element closest to the top of the viewport
     Object.keys(dayRefs.current).forEach(dayStr => {
       const day = parseInt(dayStr)
       const dayElement = dayRefs.current[day]
       if (dayElement) {
-        // Get element position relative to the document
         const rect = dayElement.getBoundingClientRect()
         const elementTop = scrollTop + rect.top
-        const elementBottom = elementTop + rect.height
-        const elementCenter = elementTop + rect.height / 2
+        const elementBottom = scrollTop + rect.bottom
         
         // Check if element is visible in the viewport
-        if (elementBottom > scrollTop && elementTop < scrollTop + windowHeight) {
-          const distanceFromCenter = Math.abs(elementCenter - viewportCenter)
+        if (elementBottom > viewportTop && elementTop < scrollTop + windowHeight) {
+          // Distance from element top to viewport top (after sticky header)
+          const distanceFromTop = Math.abs(elementTop - viewportTop)
           
-          console.log(`Day ${day}: elementCenter=${elementCenter}, viewportCenter=${viewportCenter}, distance=${distanceFromCenter}`)
-          
-          if (distanceFromCenter < closestDistance) {
-            closestDistance = distanceFromCenter
-            closestDay = day
+          if (distanceFromTop < closestTopDistance) {
+            closestTopDistance = distanceFromTop
+            closestToTop = day
           }
         }
       }
     })
 
-    if (closestDay !== null && closestDay !== currentViewDateRef.current) {
-      console.log('Updating current view date from', currentViewDateRef.current, 'to:', closestDay)
-      currentViewDateRef.current = closestDay
-      setCurrentViewDate(closestDay)
+    // Check if we're near the bottom of the page
+    const documentHeight = document.documentElement.scrollHeight
+    const isNearBottom = scrollTop + windowHeight >= documentHeight - 50
+
+    if (isNearBottom) {
+      // When near bottom, find the bottommost visible element (smallest day number since sorted desc)
+      let bottomMostDay = null
+      let bottomMostPosition = -1
+      
+      Object.keys(dayRefs.current).forEach(dayStr => {
+        const day = parseInt(dayStr)
+        const dayElement = dayRefs.current[day]
+        if (dayElement) {
+          const rect = dayElement.getBoundingClientRect()
+          const elementBottom = scrollTop + rect.bottom
+          
+          // Check if element is visible
+          if (rect.top < windowHeight && rect.bottom > stickyHeaderHeight) {
+            // Find the element that's furthest down the page (highest bottom position)
+            if (elementBottom > bottomMostPosition) {
+              bottomMostPosition = elementBottom
+              bottomMostDay = day
+            }
+          }
+        }
+      })
+      targetDay = bottomMostDay
+      console.log('Near bottom - targeting day:', bottomMostDay)
+    } else {
+      targetDay = closestToTop
+    }
+
+    if (targetDay !== null && targetDay !== currentViewDateRef.current) {
+      console.log('Updating current view date from', currentViewDateRef.current, 'to:', targetDay, isNearBottom ? '(near bottom)' : '(closest to top)')
+      currentViewDateRef.current = targetDay
+      setCurrentViewDate(targetDay)
     }
   }, [])
 
