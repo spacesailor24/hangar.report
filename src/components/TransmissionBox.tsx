@@ -1,6 +1,10 @@
+'use client'
+
 import { TransmissionType, Category } from '@prisma/client'
+import { useRouter } from 'next/navigation'
 
 interface TransmissionBoxProps {
+  id: string
   title: string
   type: TransmissionType
   categories: Category[]
@@ -43,12 +47,18 @@ const categoryColors = {
 }
 
 export default function TransmissionBox({ 
+  id,
   title, 
   type, 
   categories, 
   date,
   summary 
 }: TransmissionBoxProps) {
+  const router = useRouter()
+  
+  const handleClick = () => {
+    router.push(`/transmission/${id}`)
+  }
   const formatDate = (date: Date) => {
     const month = date.toLocaleDateString('en-US', { month: 'long' })
     const day = date.getDate()
@@ -64,7 +74,7 @@ export default function TransmissionBox({
   }
 
   return (
-    <div className="transmission-box overflow-hidden cursor-pointer group">
+    <div className="transmission-box overflow-hidden cursor-pointer group" onClick={handleClick}>
       {/* Sci-fi geometric elements */}
       <div className="sci-fi-elements"></div>
       <div className="detail-lines"></div>

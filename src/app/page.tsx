@@ -39,6 +39,7 @@ export default async function HighlightsPage() {
         {transmissions.map((transmission) => (
           <TransmissionBox
             key={transmission.id}
+            id={transmission.id}
             title={transmission.title}
             type={transmission.type}
             categories={transmission.categories}

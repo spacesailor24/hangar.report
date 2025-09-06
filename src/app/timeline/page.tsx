@@ -177,6 +177,7 @@ export default function TimelinePage() {
                     <div className={`absolute -left-12 top-6 w-4 h-4 rounded-full ${getTransmissionTypeColor(transmission.type)} animate-pulse`}></div>
                     <div className="absolute -left-[42px] top-10 bottom-0 w-[1px] bg-[var(--transmission-border)]"></div>
                     <TransmissionBox
+                      id={transmission.id}
                       title={transmission.title}
                       type={transmission.type}
                       categories={transmission.categories}

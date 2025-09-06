@@ -210,3 +210,169 @@ body {
 .warning-accent {
   color: var(--accent-warning);
 }
+
+/* Markdown Content Styling for Transmission Details */
+.transmission-content h1 {
+  color: var(--accent-nasa);
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  margin-top: 2rem;
+  font-family: var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--transmission-border);
+  padding-bottom: 0.5rem;
+}
+
+.transmission-content h2 {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+  font-family: var(--font-mono), monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.transmission-content h3 {
+  color: #cccccc;
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+  margin-top: 1.5rem;
+  font-family: var(--font-mono), monospace;
+}
+
+.transmission-content h4 {
+  color: #aaaaaa;
+  font-size: 1.125rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  margin-top: 1rem;
+  font-family: var(--font-mono), monospace;
+}
+
+.transmission-content p {
+  margin-bottom: 1rem;
+  line-height: 1.7;
+  color: var(--foreground);
+}
+
+.transmission-content strong {
+  color: var(--accent-nasa);
+  font-weight: bold;
+}
+
+.transmission-content em {
+  color: #cccccc;
+  font-style: italic;
+}
+
+.transmission-content ul,
+.transmission-content ol {
+  margin-bottom: 1rem;
+  margin-left: 1.5rem;
+}
+
+.transmission-content li {
+  margin-bottom: 0.5rem;
+  line-height: 1.6;
+}
+
+.transmission-content li::marker {
+  color: var(--accent-nasa);
+}
+
+.transmission-content blockquote {
+  border-left: 3px solid var(--accent-nasa);
+  background: rgba(255, 85, 0, 0.05);
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  font-style: italic;
+  border-radius: 0 4px 4px 0;
+}
+
+.transmission-content blockquote p {
+  margin-bottom: 0.5rem;
+}
+
+.transmission-content blockquote p:last-child {
+  margin-bottom: 0;
+}
+
+.transmission-content code {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent-nasa);
+  padding: 0.2rem 0.4rem;
+  border-radius: 3px;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.9em;
+  border: 1px solid rgba(255, 85, 0, 0.2);
+}
+
+.transmission-content pre {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--transmission-border);
+  border-radius: 4px;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  position: relative;
+}
+
+.transmission-content pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #cccccc;
+}
+
+.transmission-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  border: 1px solid var(--transmission-border);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.transmission-content th,
+.transmission-content td {
+  border: 1px solid var(--transmission-border);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.transmission-content th {
+  background: rgba(255, 85, 0, 0.1);
+  color: var(--accent-nasa);
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+
+.transmission-content td {
+  color: var(--foreground);
+}
+
+.transmission-content hr {
+  border: none;
+  height: 1px;
+  background: var(--transmission-border);
+  margin: 2rem 0;
+  position: relative;
+}
+
+.transmission-content hr::before {
+  content: "◊";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--background);
+  color: var(--accent-nasa);
+  padding: 0 1rem;
+  font-size: 1.2em;
+}

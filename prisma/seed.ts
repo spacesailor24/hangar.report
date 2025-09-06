@@ -1,6 +1,13 @@
 import { PrismaClient, TransmissionType, Category } from '@prisma/client'
+import { readFileSync } from 'fs'
+import { join } from 'path'
 
 const prisma = new PrismaClient()
+
+function readMarkdownFile(filename: string): string {
+  const filePath = join(__dirname, 'content', filename)
+  return readFileSync(filePath, 'utf-8')
+}
 
 async function main() {
   console.log('🌱 Seeding database...')
@@ -16,7 +23,7 @@ async function main() {
     prisma.transmission.create({
       data: {
         title: 'Medical Gameplay Overhaul Announced',
-        content: 'Cloud Imperium Games reveals major changes to the medical system including new injuries, treatment options, and hospital gameplay loops. The update introduces tiered medical facilities, specialized equipment, and expanded role-playing opportunities for medical professionals.',
+        content: readMarkdownFile('medical-gameplay-overhaul.md'),
         summary: 'CIG reveals major changes to the medical system including new injuries, treatment options, and hospital gameplay loops.',
         type: TransmissionType.OFFICIAL,
         categories: [Category.MEDICAL, Category.GAMEPLAY],
@@ -30,7 +37,7 @@ async function main() {
     prisma.transmission.create({
       data: {
         title: 'OMC Utility Armor Leaked',
-        content: 'Data miners have discovered references to a new heavy utility armor variant in the game files. The OMC (Odyssey Manufacturing Company) Utility Armor appears to feature enhanced cargo capacity, environmental protection, and modular attachment points.',
+        content: readMarkdownFile('omc-utility-armor-leaked.md'),
         summary: 'New heavy utility armor variant spotted in game files, featuring enhanced cargo capacity and environmental protection.',
         type: TransmissionType.LEAK,
         categories: [Category.GEAR],
@@ -43,7 +50,7 @@ async function main() {
     prisma.transmission.create({
       data: {
         title: 'Yormandi - Jungle Valakaar Variant',
-        content: 'Mining through the latest game files reveals references to a new creature variant - the Jungle Valakaar. This appears to be an environmental adaptation of the existing Valakaar species, potentially planned for upcoming jungle or forest worlds.',
+        content: readMarkdownFile('jungle-valakaar-variant.md'),
         summary: 'Data miners discover references to a new jungle-dwelling Valakaar creature variant planned for upcoming systems.',
         type: TransmissionType.LEAK,
         categories: [Category.MOB, Category.LOCATIONS],
@@ -56,7 +63,7 @@ async function main() {
     prisma.transmission.create({
       data: {
         title: 'RSI Perseus Enters Production',
-        content: 'Roberts Space Industries announces that the long-awaited Perseus gunship has officially entered the production pipeline. The sub-capital class vessel features updated specifications including enhanced armor plating and revised weapon hardpoints.',
+        content: readMarkdownFile('rsi-perseus-production.md'),
         summary: 'The long-awaited sub-capital gunship moves from concept to production phase with updated specifications.',
         type: TransmissionType.NEWS,
         categories: [Category.SHIPS],
@@ -70,7 +77,7 @@ async function main() {
     prisma.transmission.create({
       data: {
         title: 'Economy Balance Pass 4.0',
-        content: 'A comprehensive economic rebalancing is planned for the next major patch, focusing on cargo operations, mining yields, and salvage profitability. The changes aim to create more meaningful progression paths and improve the risk-reward balance across all economic activities.',
+        content: readMarkdownFile('economy-balance-pass.md'),
         summary: 'Major economic rebalancing planned for cargo, mining, and salvage operations to create more meaningful progression.',
         type: TransmissionType.OFFICIAL,
         categories: [Category.ECONOMY, Category.GAMEPLAY],
@@ -84,7 +91,7 @@ async function main() {
     prisma.transmission.create({
       data: {
         title: 'Pyro System Jump Points Unstable?',
-        content: 'Unconfirmed reports from the Pyro system suggest that jump points may be experiencing periodic instability. Some pilots report being unable to traverse certain jump points during specific time windows, leading to speculation about dynamic jump point mechanics.',
+        content: readMarkdownFile('pyro-jump-points-unstable.md'),
         summary: 'Reports suggest dynamic jump point behavior may be coming, with Pyro connections becoming periodically inaccessible.',
         type: TransmissionType.RUMOR,
         categories: [Category.LOCATIONS],
@@ -97,7 +104,7 @@ async function main() {
     prisma.transmission.create({
       data: {
         title: 'Drake Ironclad Assault Variant',
-        content: 'Leaked concept images show a heavily armed variant of the Drake Ironclad with additional weapon hardpoints, reinforced armor plating, and what appears to be a troop transport compartment. The variant seems designed for boarding operations.',
+        content: readMarkdownFile('drake-ironclad-assault.md'),
         summary: 'Leaked images show a heavily armed variant of the Ironclad with additional weapon hardpoints and reinforced armor.',
         type: TransmissionType.LEAK,
         categories: [Category.SHIPS, Category.WEAPONS],
@@ -110,7 +117,7 @@ async function main() {
     prisma.transmission.create({
       data: {
         title: 'Quantum Travel Rework Phase 2',
-        content: 'The second phase of quantum travel improvements focuses on navigation UI enhancements and advanced route planning capabilities. Players will be able to plot complex multi-jump routes and receive real-time hazard warnings.',
+        content: readMarkdownFile('quantum-travel-rework-phase2.md'),
         summary: 'Second phase of quantum travel improvements focuses on navigation UI and route planning capabilities.',
         type: TransmissionType.NEWS,
         categories: [Category.GAMEPLAY],
