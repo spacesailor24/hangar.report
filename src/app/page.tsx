@@ -64,7 +64,7 @@ export default function HighlightsPage() {
         </p>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-3">
         {mockTransmissions.map((transmission) => (
           <TransmissionBox
             key={transmission.id}
