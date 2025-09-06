@@ -1,15 +1,23 @@
 'use client'
 
+import { useState } from 'react'
 import { TransmissionType, Category } from '@prisma/client'
-import { useRouter } from 'next/navigation'
+import TransmissionModal from './TransmissionModal'
 
-interface TransmissionBoxProps {
+interface Transmission {
   id: string
   title: string
+  content: string
+  summary: string | null
   type: TransmissionType
   categories: Category[]
-  date: Date
-  summary?: string
+  sourceAuthor: string | null
+  sourceUrl: string | null
+  publishedAt: Date
+}
+
+interface TransmissionBoxProps {
+  transmission: Transmission
 }
 
 const typeColors = {
@@ -47,17 +55,12 @@ const categoryColors = {
 }
 
 export default function TransmissionBox({ 
-  id,
-  title, 
-  type, 
-  categories, 
-  date,
-  summary 
+  transmission
 }: TransmissionBoxProps) {
-  const router = useRouter()
+  const [isModalOpen, setIsModalOpen] = useState(false)
   
   const handleClick = () => {
-    router.push(`/transmission/${id}`)
+    setIsModalOpen(true)
   }
   const formatDate = (date: Date) => {
     const month = date.toLocaleDateString('en-US', { month: 'long' })
@@ -74,7 +77,8 @@ export default function TransmissionBox({
   }
 
   return (
-    <div className="transmission-box overflow-hidden cursor-pointer group" onClick={handleClick}>
+    <>
+      <div className="transmission-box overflow-hidden cursor-pointer group" onClick={handleClick}>
       {/* Sci-fi geometric elements */}
       <div className="sci-fi-elements"></div>
       <div className="detail-lines"></div>
@@ -85,14 +89,14 @@ export default function TransmissionBox({
       <div className="bg-[rgba(255,255,255,0.05)] border-b border-[var(--transmission-border)] px-3 py-1.5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className={`text-xs px-2 py-0.5 rounded-sm font-bold ${typeHeaderColors[type]}`}>
-              {type}
+            <span className={`text-xs px-2 py-0.5 rounded-sm font-bold ${typeHeaderColors[transmission.type]}`}>
+              {transmission.type}
             </span>
             <span className="text-xs opacity-40">|</span>
-            <span className="text-xs font-mono opacity-60">{generateFileId(title, date)}</span>
+            <span className="text-xs font-mono opacity-60">{generateFileId(transmission.title, transmission.publishedAt)}</span>
             <span className="text-xs opacity-40">|</span>
             <div className="flex gap-1">
-              {categories.map((category) => (
+              {transmission.categories.map((category) => (
                 <span 
                   key={category}
                   className={`text-xs font-mono ${categoryColors[category]}`}
@@ -103,7 +107,7 @@ export default function TransmissionBox({
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <span className="text-xs opacity-60">{formatDate(date)}</span>
+            <span className="text-xs opacity-60">{formatDate(transmission.publishedAt)}</span>
           </div>
         </div>
       </div>
@@ -113,11 +117,11 @@ export default function TransmissionBox({
         <div className="flex items-start justify-between mb-3">
           <div className="flex-1 mr-4">
             <h3 className="text-base font-bold mb-2 group-hover:text-[var(--accent-nasa)] transition-colors">
-              {title}
+              {transmission.title}
             </h3>
-            {summary && (
+            {transmission.summary && (
               <p className="text-sm opacity-70 line-clamp-2 mb-3">
-                {summary}
+                {transmission.summary}
               </p>
             )}
           </div>
@@ -131,6 +135,15 @@ export default function TransmissionBox({
           </div>
         </div>
       </div>
-    </div>
+      </div>
+
+      {/* Modal */}
+      {isModalOpen && (
+        <TransmissionModal 
+          transmission={transmission}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
+    </>
   )
 }

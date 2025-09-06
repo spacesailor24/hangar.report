@@ -9,13 +9,6 @@ async function getHighlightedTransmissions() {
     orderBy: {
       publishedAt: 'desc',
     },
-    include: {
-      tags: {
-        select: {
-          name: true,
-        },
-      },
-    },
   })
   
   return transmissions
@@ -39,12 +32,10 @@ export default async function HighlightsPage() {
         {transmissions.map((transmission) => (
           <TransmissionBox
             key={transmission.id}
-            id={transmission.id}
-            title={transmission.title}
-            type={transmission.type}
-            categories={transmission.categories}
-            date={new Date(transmission.publishedAt)}
-            summary={transmission.summary || undefined}
+            transmission={{
+              ...transmission,
+              publishedAt: new Date(transmission.publishedAt)
+            }}
           />
         ))}
       </div>

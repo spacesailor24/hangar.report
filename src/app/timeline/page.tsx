@@ -12,10 +12,13 @@ const months = [
 interface Transmission {
   id: string
   title: string
+  content: string
+  summary: string | null
   type: TransmissionType
   categories: Category[]
+  sourceAuthor: string | null
+  sourceUrl: string | null
   publishedAt: string
-  summary: string | null
 }
 
 async function fetchTransmissions(year?: number, month?: number, day?: number): Promise<Transmission[]> {
@@ -177,12 +180,10 @@ export default function TimelinePage() {
                     <div className={`absolute -left-12 top-6 w-4 h-4 rounded-full ${getTransmissionTypeColor(transmission.type)} animate-pulse`}></div>
                     <div className="absolute -left-[42px] top-10 bottom-0 w-[1px] bg-[var(--transmission-border)]"></div>
                     <TransmissionBox
-                      id={transmission.id}
-                      title={transmission.title}
-                      type={transmission.type}
-                      categories={transmission.categories}
-                      date={new Date(transmission.publishedAt)}
-                      summary={transmission.summary || undefined}
+                      transmission={{
+                        ...transmission,
+                        publishedAt: new Date(transmission.publishedAt)
+                      }}
                     />
                   </div>
                 ))}

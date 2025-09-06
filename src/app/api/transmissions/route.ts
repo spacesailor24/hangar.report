@@ -38,13 +38,6 @@ export async function GET(request: NextRequest) {
         publishedAt: 'desc',
       },
       take: limit,
-      include: {
-        tags: {
-          select: {
-            name: true,
-          },
-        },
-      },
     })
 
     return NextResponse.json({ transmissions })

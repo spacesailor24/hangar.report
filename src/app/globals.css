@@ -376,3 +376,123 @@ body {
   padding: 0 1rem;
   font-size: 1.2em;
 }
+
+/* Custom Sci-Fi Scrollbar for Modal Content */
+.modal-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-nasa) rgba(255, 255, 255, 0.1);
+  scrollbar-gutter: stable;
+}
+
+.modal-scrollbar::-webkit-scrollbar {
+  width: 12px;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.modal-scrollbar::-webkit-scrollbar:horizontal {
+  height: 12px;
+}
+
+.modal-scrollbar::-webkit-scrollbar:vertical {
+  width: 12px;
+}
+
+.modal-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0;
+  border-left: 1px solid var(--transmission-border);
+  -webkit-appearance: none;
+}
+
+.modal-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg, 
+    var(--accent-nasa) 0%, 
+    rgba(255, 85, 0, 0.6) 50%, 
+    var(--accent-nasa) 100%
+  );
+  border-radius: 0;
+  border: 1px solid rgba(255, 85, 0, 0.3);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 0 4px rgba(255, 85, 0, 0.3);
+  -webkit-appearance: none;
+  min-height: 40px;
+}
+
+.modal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg, 
+    #ff6600 0%, 
+    var(--accent-nasa) 50%, 
+    #ff6600 100%
+  );
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 6px rgba(255, 85, 0, 0.5);
+}
+
+.modal-scrollbar::-webkit-scrollbar-thumb:active {
+  background: var(--accent-nasa);
+  box-shadow: 
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 0 8px rgba(255, 85, 0, 0.7);
+}
+
+.modal-scrollbar::-webkit-scrollbar-corner {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Force scrollbar to always be visible - prevent auto-hiding */
+.modal-scrollbar {
+  overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Override all webkit scrollbar behaviors */
+.modal-scrollbar::-webkit-scrollbar {
+  -webkit-appearance: none !important;
+  width: 12px !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  display: block !important;
+}
+
+.modal-scrollbar::-webkit-scrollbar:hover {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.modal-scrollbar::-webkit-scrollbar-track {
+  -webkit-appearance: none !important;
+  background: rgba(255, 255, 255, 0.05) !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.modal-scrollbar::-webkit-scrollbar-thumb {
+  -webkit-appearance: none !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* Force permanent visibility across all browsers */
+@supports (scrollbar-width: thin) {
+  .modal-scrollbar {
+    scrollbar-width: thin !important;
+    scrollbar-color: var(--accent-nasa) rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+/* Additional overrides to prevent auto-hide */
+.modal-scrollbar {
+  scrollbar-width: auto !important;
+}
+
+.modal-scrollbar::-webkit-scrollbar-track,
+.modal-scrollbar::-webkit-scrollbar-thumb,
+.modal-scrollbar::-webkit-scrollbar {
+  transition: none !important;
+  animation: none !important;
+}
