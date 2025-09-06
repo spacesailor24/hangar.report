@@ -1,0 +1,86 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TransmissionType {
+  NEWS
+  LEAK
+  OFFICIAL
+  RUMOR
+}
+
+enum Category {
+  SHIPS
+  WEAPONS
+  GEAR
+  MEDICAL
+  GAMEPLAY
+  ECONOMY
+  LOCATIONS
+  LORE
+  MOB
+  OTHER
+}
+
+model Transmission {
+  id           String           @id @default(cuid())
+  title        String
+  content      String           @db.Text
+  summary      String?          @db.Text
+  type         TransmissionType
+  categories   Category[]
+  tags         Tag[]
+  sourceUrl    String?
+  sourceAuthor String?
+  isHighlight  Boolean          @default(false)
+  publishedAt  DateTime
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  topics       TopicTransmission[]
+
+  @@index([publishedAt])
+  @@index([type])
+  @@index([isHighlight])
+}
+
+model Tag {
+  id             String         @id @default(cuid())
+  name           String         @unique
+  transmissions  Transmission[]
+  createdAt      DateTime       @default(now())
+}
+
+model Topic {
+  id           String              @id @default(cuid())
+  name         String              @unique
+  description  String?
+  parentId     String?
+  parent       Topic?              @relation("TopicHierarchy", fields: [parentId], references: [id])
+  children     Topic[]             @relation("TopicHierarchy")
+  transmissions TopicTransmission[]
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@index([parentId])
+}
+
+model TopicTransmission {
+  topicId        String
+  transmissionId String
+  topic          Topic        @relation(fields: [topicId], references: [id])
+  transmission   Transmission @relation(fields: [transmissionId], references: [id])
+  relevance      Int          @default(50)
+
+  @@id([topicId, transmissionId])
+}
