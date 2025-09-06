@@ -65,6 +65,10 @@ export default function TransmissionBox({
 
   return (
     <div className="transmission-box overflow-hidden cursor-pointer group">
+      {/* Sci-fi geometric elements */}
+      <div className="sci-fi-elements"></div>
+      <div className="scan-line"></div>
+      
       {/* File Header Bar */}
       <div className="bg-[rgba(255,255,255,0.05)] border-b border-[var(--transmission-border)] px-3 py-1.5">
         <div className="flex items-center justify-between">

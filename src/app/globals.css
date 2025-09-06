@@ -33,16 +33,122 @@ body {
 
 
 .transmission-box {
-  background: var(--transmission-bg);
+  background: linear-gradient(135deg, var(--transmission-bg) 0%, rgba(255, 255, 255, 0.01) 100%);
   border: 1px solid var(--transmission-border);
   backdrop-filter: blur(10px);
-  transition: all 0.3s ease;
+  transition: all 0.4s ease;
+  position: relative;
+  clip-path: polygon(
+    0 8px, 8px 0, 
+    calc(100% - 24px) 0, calc(100% - 16px) 8px, calc(100% - 8px) 8px, 100% 16px,
+    100% calc(100% - 16px), calc(100% - 8px) calc(100% - 8px), calc(100% - 8px) 100%,
+    24px 100%, 16px calc(100% - 8px), 8px calc(100% - 8px),
+    0 calc(100% - 16px)
+  );
+}
+
+/* Corner accent elements */
+.transmission-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(-45deg, var(--accent-nasa), transparent 70%);
+  opacity: 0;
+  transition: all 0.4s ease;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
+
+.transmission-box::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, var(--accent-nasa), transparent 70%);
+  opacity: 0;
+  transition: all 0.4s ease;
+  clip-path: polygon(0 100%, 0 0, 100% 100%);
+}
+
+/* Additional geometric elements */
+.transmission-box .sci-fi-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.transmission-box .sci-fi-elements::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-nasa), transparent);
+  transition: all 0.4s ease;
+}
+
+.transmission-box .sci-fi-elements::after {
+  content: '';
+  position: absolute;
+  bottom: 8px;
+  right: 16px;
+  width: 32px;
+  height: 1px;
+  background: linear-gradient(-90deg, var(--accent-nasa), transparent);
+  transition: all 0.4s ease;
 }
 
 .transmission-box:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 85, 0, 0.02) 100%);
   border-color: var(--accent-nasa);
-  box-shadow: 0 0 20px rgba(255, 85, 0, 0.2);
+  box-shadow: 
+    0 0 30px rgba(255, 85, 0, 0.3),
+    inset 0 0 0 1px rgba(255, 85, 0, 0.2),
+    0 0 60px rgba(255, 85, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.transmission-box:hover::before,
+.transmission-box:hover::after {
+  opacity: 0.8;
+}
+
+.transmission-box:hover .sci-fi-elements {
+  opacity: 1;
+}
+
+/* Animated scan line effect */
+.transmission-box:hover .scan-line {
+  animation: scanLine 2s ease-in-out infinite;
+}
+
+@keyframes scanLine {
+  0%, 100% { 
+    opacity: 0; 
+    transform: translateX(-100%); 
+  }
+  50% { 
+    opacity: 0.3; 
+    transform: translateX(100%); 
+  }
+}
+
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, var(--accent-nasa), transparent);
+  opacity: 0;
+  pointer-events: none;
 }
 
 .nasa-accent {
