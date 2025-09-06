@@ -9,85 +9,62 @@ const months = [
   'July', 'August', 'September', 'October', 'November', 'December'
 ]
 
-const mockTimelineData = [
-  {
-    id: '1',
-    title: 'Medical Gameplay Overhaul Announced',
-    type: TransmissionType.OFFICIAL,
-    categories: [Category.MEDICAL, Category.GAMEPLAY],
-    date: new Date('2025-01-05'),
-    summary: 'CIG reveals major changes to the medical system including new injuries, treatment options, and hospital gameplay loops.'
-  },
-  {
-    id: '2',
-    title: 'OMC Utility Armor Leaked',
-    type: TransmissionType.LEAK,
-    categories: [Category.GEAR],
-    date: new Date('2025-01-05'),
-    summary: 'New heavy utility armor variant spotted in game files, featuring enhanced cargo capacity and environmental protection.'
-  },
-  {
-    id: '3',
-    title: 'Yormandi - Jungle Valakaar Variant',
-    type: TransmissionType.LEAK,
-    categories: [Category.MOB, Category.LOCATIONS],
-    date: new Date('2025-01-04'),
-    summary: 'Data miners discover references to a new jungle-dwelling Valakaar creature variant planned for upcoming systems.'
-  },
-  {
-    id: '4',
-    title: 'RSI Perseus Enters Production',
-    type: TransmissionType.NEWS,
-    categories: [Category.SHIPS],
-    date: new Date('2025-01-04'),
-    summary: 'The long-awaited sub-capital gunship moves from concept to production phase with updated specifications.'
-  },
-  {
-    id: '5',
-    title: 'Economy Balance Pass 4.0',
-    type: TransmissionType.OFFICIAL,
-    categories: [Category.ECONOMY, Category.GAMEPLAY],
-    date: new Date('2025-01-03'),
-    summary: 'Major economic rebalancing planned for cargo, mining, and salvage operations to create more meaningful progression.'
-  },
-  {
-    id: '6',
-    title: 'Pyro System Jump Points Unstable?',
-    type: TransmissionType.RUMOR,
-    categories: [Category.LOCATIONS],
-    date: new Date('2025-01-03'),
-    summary: 'Reports suggest dynamic jump point behavior may be coming, with Pyro connections becoming periodically inaccessible.'
-  },
-  {
-    id: '7',
-    title: 'Drake Ironclad Assault Variant',
-    type: TransmissionType.LEAK,
-    categories: [Category.SHIPS, Category.WEAPONS],
-    date: new Date('2025-01-02'),
-    summary: 'Leaked images show a heavily armed variant of the Ironclad with additional weapon hardpoints and reinforced armor.'
-  },
-  {
-    id: '8',
-    title: 'Quantum Travel Rework Phase 2',
-    type: TransmissionType.NEWS,
-    categories: [Category.GAMEPLAY],
-    date: new Date('2025-01-02'),
-    summary: 'Second phase of quantum travel improvements focuses on navigation UI and route planning capabilities.'
+interface Transmission {
+  id: string
+  title: string
+  type: TransmissionType
+  categories: Category[]
+  publishedAt: string
+  summary: string | null
+}
+
+async function fetchTransmissions(year?: number, month?: number, day?: number): Promise<Transmission[]> {
+  try {
+    const params = new URLSearchParams()
+    if (year) params.append('year', year.toString())
+    if (month !== undefined) params.append('month', month.toString())
+    if (day !== undefined) params.append('day', day.toString())
+
+    const response = await fetch(`/api/transmissions?${params.toString()}`)
+    if (!response.ok) throw new Error('Failed to fetch')
+    
+    const data = await response.json()
+    return data.transmissions || []
+  } catch (error) {
+    console.error('Error fetching transmissions:', error)
+    return []
   }
-]
+}
 
 export default function TimelinePage() {
   const [selectedYear] = useState(2025)
   const [selectedMonth, setSelectedMonth] = useState(0)
   const [selectedDay, setSelectedDay] = useState<number | null>(null)
+  const [transmissions, setTransmissions] = useState<Transmission[]>([])
+  const [loading, setLoading] = useState(true)
   const timelineRef = useRef<HTMLDivElement>(null)
 
   const currentDate = new Date()
   const currentMonth = currentDate.getMonth()
   const daysInMonth = new Date(selectedYear, selectedMonth + 1, 0).getDate()
 
-  const filteredTransmissions = mockTimelineData.filter(transmission => {
-    const date = transmission.date
+  useEffect(() => {
+    async function loadTransmissions() {
+      setLoading(true)
+      const data = await fetchTransmissions(
+        selectedYear,
+        selectedDay ? selectedMonth : undefined,
+        selectedDay || undefined
+      )
+      setTransmissions(data)
+      setLoading(false)
+    }
+    
+    loadTransmissions()
+  }, [selectedYear, selectedMonth, selectedDay])
+
+  const filteredTransmissions = transmissions.filter(transmission => {
+    const date = new Date(transmission.publishedAt)
     if (selectedDay) {
       return date.getMonth() === selectedMonth && 
              date.getDate() === selectedDay &&
@@ -98,7 +75,7 @@ export default function TimelinePage() {
   })
 
   const groupedByDay = filteredTransmissions.reduce((groups, transmission) => {
-    const day = transmission.date.getDate()
+    const day = new Date(transmission.publishedAt).getDate()
     if (!groups[day]) groups[day] = []
     groups[day].push(transmission)
     return groups
@@ -203,8 +180,8 @@ export default function TimelinePage() {
                       title={transmission.title}
                       type={transmission.type}
                       categories={transmission.categories}
-                      date={transmission.date}
-                      summary={transmission.summary}
+                      date={new Date(transmission.publishedAt)}
+                      summary={transmission.summary || undefined}
                     />
                   </div>
                 ))}
@@ -212,7 +189,16 @@ export default function TimelinePage() {
             </div>
           ))}
           
-        {filteredTransmissions.length === 0 && (
+        {loading && (
+          <div className="text-center py-20">
+            <p className="text-[var(--accent-nasa)] mb-2">SCANNING TRANSMISSION LOGS...</p>
+            <p className="text-sm opacity-60">
+              Accessing archived communications
+            </p>
+          </div>
+        )}
+        
+        {!loading && filteredTransmissions.length === 0 && (
           <div className="text-center py-20">
             <p className="text-[var(--accent-nasa)] mb-2">NO TRANSMISSIONS DETECTED</p>
             <p className="text-sm opacity-60">
