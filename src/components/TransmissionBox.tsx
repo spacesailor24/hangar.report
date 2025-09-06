@@ -67,6 +67,8 @@ export default function TransmissionBox({
     <div className="transmission-box overflow-hidden cursor-pointer group">
       {/* Sci-fi geometric elements */}
       <div className="sci-fi-elements"></div>
+      <div className="detail-lines"></div>
+      <div className="circuit-pattern"></div>
       <div className="scan-line"></div>
       
       {/* File Header Bar */}
