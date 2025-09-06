@@ -3,7 +3,6 @@
 :root {
   --background: #0a0a0a;
   --foreground: #ededed;
-  --grid-color: rgba(255, 255, 255, 0.1);
   --accent-nasa: #FF5500;
   --accent-cyber: #00FF88;
   --accent-warning: #FFD700;
@@ -26,15 +25,14 @@ html {
 }
 
 body {
-  background-color: var(--background);
-  background-image: 
-    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
-  background-size: 50px 50px;
+  background-color: #0a0a0a;
   color: var(--foreground);
   font-family: var(--font-mono), monospace;
   min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
 }
+
 
 .transmission-box {
   background: var(--transmission-bg);
