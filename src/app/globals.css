@@ -90,14 +90,7 @@ body {
 }
 
 .transmission-box .sci-fi-elements::before {
-  content: '';
-  position: absolute;
-  top: 8px;
-  left: 16px;
-  width: 32px;
-  height: 1px;
-  background: linear-gradient(90deg, var(--accent-nasa), transparent);
-  transition: all 0.4s ease;
+  display: none;
 }
 
 .transmission-box .sci-fi-elements::after {
@@ -120,13 +113,7 @@ body {
 }
 
 .transmission-box .detail-lines::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 8px;
-  width: 1px;
-  height: 16px;
-  background: linear-gradient(180deg, var(--accent-nasa), transparent);
+  display: none;
 }
 
 .transmission-box .detail-lines::after {

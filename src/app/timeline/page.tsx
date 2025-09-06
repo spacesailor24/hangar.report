@@ -307,9 +307,7 @@ export default function TimelinePage() {
               
               <div className="space-y-4 pl-12">
                 {transmissions.map(transmission => (
-                  <div key={transmission.id} className="relative">
-                    <div className={`absolute -left-12 top-6 w-4 h-4 rounded-full ${getTransmissionTypeColor(transmission.type)} animate-pulse`}></div>
-                    <div className="absolute -left-[42px] top-10 bottom-0 w-[1px] bg-[var(--transmission-border)]"></div>
+                  <div key={transmission.id}>
                     <TransmissionBox
                       transmission={{
                         ...transmission,

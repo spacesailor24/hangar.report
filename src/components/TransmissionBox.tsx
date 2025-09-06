@@ -86,10 +86,11 @@ export default function TransmissionBox({
       <div className="scan-line"></div>
       
       {/* File Header Bar */}
-      <div className="bg-[rgba(255,255,255,0.05)] border-b border-[var(--transmission-border)] px-3 py-1.5">
+      <div className="bg-[rgba(255,255,255,0.05)] border-b border-[var(--transmission-border)] px-4 py-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className={`text-xs px-2 py-0.5 rounded-sm font-bold ${typeHeaderColors[transmission.type]}`}>
+            <div className={`w-2 h-2 rounded-full animate-pulse ${typeColors[transmission.type].replace('text-', 'bg-')}`}></div>
+            <span className={`text-xs font-bold ${typeColors[transmission.type]}`}>
               {transmission.type}
             </span>
             <span className="text-xs opacity-40">|</span>
